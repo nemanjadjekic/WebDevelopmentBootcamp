@@ -44,30 +44,8 @@ function nextSequence() {
 }
 
 function playSound(name) {
-  switch (name) {
-    case "red":
-      var red = new Audio("sounds/red.mp3");
-      red.play();
-      break;
-
-    case "green":
-      var green = new Audio("sounds/green.mp3");
-      green.play();
-      break;
-
-    case "blue":
-      var blue = new Audio("sounds/blue.mp3");
-      blue.play();
-      break;
-
-    case "yellow":
-      var yellow = new Audio("sounds/yellow.mp3");
-      yellow.play();
-      break;
-
-    default:
-      console.log();
-  }
+  var sound = new Audio("sounds/" + name + ".mp3");
+  sound.play();
 }
 
 function animatePress(currentColour) {
