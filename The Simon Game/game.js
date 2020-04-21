@@ -58,14 +58,26 @@ function animatePress(currentColour) {
 
 function checkAnswer(currentLevel) {
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
-    console.log("True!");
     if (userClickedPattern.length === gamePattern.length) {
       setTimeout(function () {
         nextSequence();
-        console.log("True Length!");
-      }, 1000);
+      }, 1500);
     }
   } else {
-    console.log("False!");
+    $("#level-title").html("Game Over, Press Any Key to Restart");
+    $("body").addClass("game-over");
+
+    setTimeout(function () {
+      $("body").removeClass("game-over");
+    }, 200);
+
+    startOver();
   }
+}
+
+function startOver() {
+  level = 0;
+  gamePattern = [];
+  userClickedPattern = [];
+  gameStarted = false;
 }
