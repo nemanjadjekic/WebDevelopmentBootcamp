@@ -1,26 +1,46 @@
 var buttonColors = ["red", "blue", "green", "yellow"];
+
 var gamePattern = [];
 var userClickedPattern = [];
 
+var gameStarted = false;
+var level = 0;
+
 $(".btn").click(function () {
-  userChosenColour = this.id;
+  var userChosenColour = $(this).attr("id");
   userClickedPattern.push(userChosenColour);
-  playSound(this.id);
-  animatePress(this.id);
-  console.log(userClickedPattern);
+
+  playSound(userChosenColour);
+  animatePress(userChosenColour);
+
+  checkAnswer(userClickedPattern.length - 1);
+});
+
+$(document).keypress(function () {
+  if (!gameStarted) {
+    $("#level-title").html("Level " + level);
+    nextSequence();
+    gameStarted = true;
+  }
 });
 
 function nextSequence() {
   var randomNumber = Math.floor(Math.random() * 4);
 
-  var randomChosenColor = buttonColors[randomNumber];
+  var randomChosenColour = buttonColors[randomNumber];
 
-  gamePattern.push(randomChosenColor);
+  gamePattern.push(randomChosenColour);
 
-  $("." + randomChosenColor).fadeOut(100); //css("background-color", "purple");
-  $("." + randomChosenColor).fadeIn(100);
+  $("." + randomChosenColour)
+    .fadeIn(100)
+    .fadeOut(100)
+    .fadeIn(100);
 
-  playSound(randomChosenColor);
+  playSound(randomChosenColour);
+
+  $("#level-title").html("Level " + level);
+  level++;
+  console.log(gamePattern);
 }
 
 function playSound(name) {
@@ -45,7 +65,8 @@ function playSound(name) {
       yellow.play();
       break;
 
-      deafult: console.log();
+    default:
+      console.log();
   }
 }
 
@@ -55,4 +76,18 @@ function animatePress(currentColour) {
   setTimeout(function () {
     $("#" + currentColour).removeClass("pressed");
   }, 100);
+}
+
+function checkAnswer(currentLevel) {
+  if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
+    console.log("True!");
+    if (userClickedPattern.length === gamePattern.length) {
+      setTimeout(function () {
+        nextSequence();
+        console.log("True Length!");
+      }, 1000);
+    }
+  } else {
+    console.log("False!");
+  }
 }
