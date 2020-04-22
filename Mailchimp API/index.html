@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Mailchimp API</title>
+  <link rel="icon" href="favicon.ico" />
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Bootstrap scripts -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <form class="form-signin" action="/" method="post">
+      <img class="mb-4 mail-img" src="images/mailchimp.jpg" />
+      <label for="firstName" class="sr-only">First Name</label>
+      <input type="text" id="firstName" class="form-control" placeholder="First Name" required />
+
+      <label for="lastName" class="sr-only">Last Name</label>
+      <input type="text" id="lastName" class="form-control" placeholder="Last Name" required />
+
+      <label for="emailAddr" class="sr-only">Email Address</label>
+      <input type="email" id="emailAddr" class="form-control" placeholder="Email Address" required />
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Sign Up
+      </button>
+    </form>
+
+    <footer class="white-section" id="footer">
+      <div class="container-fluid">
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+      </div>
+    </footer>
+  </div>
+
+</body>
+
+</html>
