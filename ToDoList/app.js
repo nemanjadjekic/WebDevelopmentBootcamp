@@ -3,12 +3,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-//const date = require(__dirname + "/date.js");
+const _ = require("lodash");
 
 const app = express();
 
 const items = [];
 const workItems = [];
+
+//Ignore default favicon request
+app.get("/favicon.ico", (req, res) => res.status(204));
 
 app.set("view engine", "ejs");
 
@@ -18,6 +21,7 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost:27017/todolistDB", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useFindAndModify: false,
 });
 
 const itemsSchema = new mongoose.Schema({
@@ -49,11 +53,7 @@ const listSchema = new mongoose.Schema({
 const List = mongoose.model("List", listSchema);
 
 app.get("/", function (req, res) {
-  // res.render("list", { listTitle: date.getDate(), newListItems: items });
-
   Item.find({}, function (err, foundItems) {
-    console.log(foundItems);
-
     if (foundItems.length === 0) {
       Item.insertMany(defaultItems, function (err) {
         if (err) {
@@ -89,34 +89,27 @@ app.post("/", function (req, res) {
   }
 });
 
-/*app.get("/work", function (req, res) {
-  res.render("list", { listTitle: "Work List", newListItems: workItems });
-});*/
-
 app.get("/:customListName", function (req, res) {
-  const customListName = req.params.customListName;
-
-  const list = new List({
-    name: customListName,
-    items: defaultItems,
-  });
+  const customListName = _.capitalize(req.params.customListName);
 
   List.findOne({ name: customListName }, function (err, foundList) {
-    if (err) {
-      console.log(err);
-    } else {
+    if (!err) {
       if (!foundList) {
-        console.log("Doesn't exist!");
+        const list = new List({
+          name: customListName,
+          items: defaultItems,
+        });
         list.save();
 
         res.redirect("/" + customListName);
       } else {
-        console.log("Exist!");
         res.render("list", {
           listTitle: foundList.name,
           newListItems: foundList.items,
         });
       }
+    } else {
+      console.log(err);
     }
   });
 });
@@ -129,15 +122,30 @@ app.post("/work", function (req, res) {
 
 app.post("/delete", function (req, res) {
   const checkedItemId = req.body.checkbox;
-  console.log(checkedItemId);
-  Item.findByIdAndRemove(checkedItemId, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Succesfully deleted item.");
-      res.redirect("/");
-    }
-  });
+  const listName = req.body.listName.toString().trim();
+
+  if (listName === "Today") {
+    Item.findByIdAndRemove(checkedItemId, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Succesfully deleted item.");
+        res.redirect("/");
+      }
+    });
+  } else {
+    List.findOneAndUpdate(
+      { name: listName },
+      { $pull: { items: { _id: checkedItemId } } },
+      function (err, foundList) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.redirect("/" + listName.toString().trim());
+        }
+      }
+    );
+  }
 });
 
 app.get("/about", function (req, res) {
