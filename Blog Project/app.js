@@ -3,7 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const _ = require("lodash");
+const mongoose = require("mongoose");
 
 const homeStartingContent =
   "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -19,13 +19,26 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-//Global variables
-const posts = [];
+mongoose.connect("mongodb://localhost:27017/blogDB", {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useFindAndModify: false,
+});
+
+const postsSchema = new mongoose.Schema({
+  title: String,
+  content: String,
+});
+
+//Create collection
+const Post = mongoose.model("Post", postsSchema);
 
 app.get("/", function (req, res) {
-  res.render("home", {
-    homeIntroContent: homeStartingContent,
-    homePosts: posts,
+  Post.find({}, function (err, posts) {
+    res.render("home", {
+      homeIntroContent: homeStartingContent,
+      homePosts: posts,
+    });
   });
 });
 
@@ -42,28 +55,26 @@ app.get("/compose", function (req, res) {
 });
 
 app.post("/compose", function (req, res) {
-  const post = {
+  const post = new Post({
     title: req.body.postTitle,
     content: req.body.postBody,
-  };
-  posts.push(post);
-  res.redirect("/");
+  });
+
+  post.save(function (err) {
+    if (!err) {
+      res.redirect("/");
+    }
+  });
 });
 
-app.get("/posts/:postName", function (req, res) {
-  const reqTitle = _.kebabCase(req.params.postName);
+app.get("/posts/:postID", function (req, res) {
+  const reqPostID = req.params.postID;
 
-  posts.forEach(function (post) {
-    let storedTitle = _.kebabCase(post.title);
-
-    if (reqTitle === storedTitle) {
-      res.render("post", {
-        postPageTitle: post.title,
-        postPageContent: post.content,
-      });
-    } else {
-      console.log("No match!");
-    }
+  Post.findOne({ _id: reqPostID }, function (err, post) {
+    res.render("post", {
+      postPageTitle: post.title,
+      postPageContent: post.content,
+    });
   });
 });
 
