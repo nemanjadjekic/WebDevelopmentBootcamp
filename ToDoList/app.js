@@ -7,9 +7,6 @@ const _ = require("lodash");
 
 const app = express();
 
-const items = [];
-const workItems = [];
-
 //Ignore default favicon request
 app.get("/favicon.ico", (req, res) => res.status(204));
 
@@ -112,12 +109,6 @@ app.get("/:customListName", function (req, res) {
       console.log(err);
     }
   });
-});
-
-app.post("/work", function (req, res) {
-  const item = req.body.newItem;
-  workItems.push(item);
-  res.redirect("/work");
 });
 
 app.post("/delete", function (req, res) {
