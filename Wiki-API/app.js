@@ -29,6 +29,9 @@ const articleShema = {
 
 const Article = mongoose.model("Article", articleShema);
 
+/**
+ * Requests Targeting All Articles
+ */
 app
   .route("/articles")
   .get(function (req, res) {
@@ -67,3 +70,39 @@ app
 app.listen(3000, function () {
   console.log("Server started on port 3000");
 });
+
+/**
+ * Requests Targeting A Specific Article
+ */
+app
+  .route("/articles/:articleTitle")
+  .get(function (req, res) {
+    Article.findOne({ title: req.params.articleTitle }, function (
+      err,
+      foundArticle
+    ) {
+      if (err) {
+        res.send(err);
+      } else {
+        if (foundArticle) {
+          res.send(foundArticle);
+        } else {
+          res.send("No Article found!");
+        }
+      }
+    });
+  })
+  .put(function (req, res) {
+    Article.update(
+      { title: req.params.articleTitle },
+      { title: req.body.title, content: req.body.content },
+      {overwrite: true},
+      function(err) {
+        if(err) {
+            res.send(err);
+        } else {
+            res.send("Successfully updated article!");
+        }
+      }
+    );
+  });
