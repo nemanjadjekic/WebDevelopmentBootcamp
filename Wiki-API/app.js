@@ -96,13 +96,36 @@ app
     Article.update(
       { title: req.params.articleTitle },
       { title: req.body.title, content: req.body.content },
-      {overwrite: true},
-      function(err) {
-        if(err) {
-            res.send(err);
+      { overwrite: true },
+      function (err) {
+        if (err) {
+          res.send(err);
         } else {
-            res.send("Successfully updated article!");
+          res.send("Successfully updated article!");
         }
       }
     );
+  })
+  .patch(function (req, res) {
+    Article.update(
+      { title: req.params.articleTitle },
+      { $set: req.body },
+      function (err) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send("Successfully patched Article!");
+        }
+      }
+    );
+  })
+  .delete(function(req, res) {
+      Article.deleteOne({title: req.params.articleTitle}, function(err) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send("Successfully deleted Article!");
+           
+        }
+      });
   });
