@@ -119,13 +119,12 @@ app
       }
     );
   })
-  .delete(function(req, res) {
-      Article.deleteOne({title: req.params.articleTitle}, function(err) {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send("Successfully deleted Article!");
-           
-        }
-      });
+  .delete(function (req, res) {
+    Article.deleteOne({ title: req.params.articleTitle }, function (err) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send("Successfully deleted Article!");
+      }
+    });
   });
