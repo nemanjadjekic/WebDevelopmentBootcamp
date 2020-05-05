@@ -1,8 +1,7 @@
 import React from "react";
 
-function footer() {
-  var objDate = new Date();
-  var year = objDate.getFullYear();
+function Footer() {
+  const year = new Date().getFullYear();
   return (
     <footer>
       <p>Copyright ⓒ {year}</p>
@@ -10,4 +9,4 @@ function footer() {
   );
 }
 
-export default footer;
+export default Footer;
