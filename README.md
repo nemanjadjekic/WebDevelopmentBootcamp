@@ -36,9 +36,9 @@ This is a set of exercies that show how to write custom API and use it. Most of 
 
 ### Secrets
 This set of exercises introduce security levels in web development. There are six levels shown:
-    * Level 1 - Registration with Username and Password
-    * Level 2 - Database Encryption
-    * Level 3 - Hashing Passwords
-    * Level 4 - Salting and Hashing Passwords with bcrypt
-    * Level 5 - Using Cookies and Sessions
-    * Level 6 - OAuth 2.0 and Implementation with Google
+* Level 1 - Registration with Username and Password
+* Level 2 - Database Encryption
+* Level 3 - Hashing Passwords
+* Level 4 - Salting and Hashing Passwords with bcrypt
+* Level 5 - Using Cookies and Sessions
+* Level 6 - OAuth 2.0 and Implementation with Google
