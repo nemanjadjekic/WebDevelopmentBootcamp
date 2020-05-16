@@ -42,3 +42,6 @@ This set of exercises introduce security levels in web development. There are si
 * Level 4 - Salting and Hashing Passwords with bcrypt
 * Level 5 - Using Cookies and Sessions
 * Level 6 - OAuth 2.0 and Implementation with Google
+
+### Keeper App
+This is a simple sticky note application made with React.JS.
