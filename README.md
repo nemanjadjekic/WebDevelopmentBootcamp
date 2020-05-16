@@ -24,3 +24,21 @@ This is a simple exercise that introduces usage of external APIs and incorporati
 
 ### Mailchimp API
 [Mailchimp](https://mailchimp.com/) API is more complex exercise that combines most of previously gained knowledge. This application takes input data from user (first name, last name and email) to subscribe them to our newsletters. This application uses Bootstrap library for design, expressJS with nodeJS for backend and [Mailchimp](https://mailchimp.com/) service APIs. [Heroku](https://www.heroku.com/) has been used for application deployment.
+
+### ToDoList
+This is a simple small project that has been built with EJS. It gives brief explanation of EJS and in later lectures this project has been upgraded with node.js routes and MongoDB. Final version of this project has possibility to store tasks and lists in MongoDB data base.
+
+### Blog Project
+This is a more advanced project than To Do List and it challanges students to make their own blog using EJS for start. Later this project is also updated via node.js and MongoDB to have possibility to store blog posts in data base.
+
+### Wiki API
+This is a set of exercies that show how to write custom API and use it. Most of the custom APIs have been tested with MailChimp.
+
+### Secrets
+This set of exercises introduce security levels in web development. There are six levels shown:
+    * Level 1 - Registration with Username and Password
+    * Level 2 - Database Encryption
+    * Level 3 - Hashing Passwords
+    * Level 4 - Salting and Hashing Passwords with bcrypt
+    * Level 5 - Using Cookies and Sessions
+    * Level 6 - OAuth 2.0 and Implementation with Google
